@@ -93,6 +93,6 @@ abstract class Dialog_Split {
 
         return d;
 
-        
+
     }
 }
