@@ -33,6 +33,8 @@ import ngoc.com.pedometer.util.Logger;
 
 public class Database extends SQLiteOpenHelper {
 
+
+    
     private final static String DB_NAME = "steps";
     private final static int DB_VERSION = 2;
 
