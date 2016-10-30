@@ -67,6 +67,13 @@ dependencies {
     playCompile 'com.google.android.gms:play-services-fitness:9.4.0'
     playCompile 'com.google.android.gms:play-services-games:9.4.0'
     playCompile 'com.google.android.gms:play-services-identity:9.4.0'
+    compile 'com.android.support:appcompat-v7:24.0.0-beta1'
+    compile 'com.android.support:design:24.0.0-beta1'
+    compile 'com.android.support:support-v4:24.0.0-beta1'
+    // commit hash
+    compile project(':library')
+
+    compile project(path: ':library')
 }
 
 def props = new Properties()

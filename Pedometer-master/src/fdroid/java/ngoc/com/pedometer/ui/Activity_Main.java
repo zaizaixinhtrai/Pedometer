@@ -25,6 +25,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.text.method.LinkMovementMethod;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -32,7 +33,7 @@ import android.widget.TextView;
 import ngoc.com.pedometer.R;
 import ngoc.com.pedometer.SensorListener;
 
-public class Activity_Main extends FragmentActivity {
+public class Activity_Main extends AppCompatActivity {
 
     @Override
     protected void onCreate(final Bundle b) {

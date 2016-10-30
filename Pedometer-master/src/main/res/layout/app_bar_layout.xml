@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="#BA0000"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:padding="5dp"
+        tools:context=".Activity_Main">
+
+        <com.dd.morphingbutton.MorphingButton
+            android:id="@+id/btnMorph1"
+            android:layout_width="200dp"
+            android:textAllCaps="false"
+            android:layout_height="56dp"
+            android:text="@string/run"
+            android:layout_centerHorizontal="true"
+            android:textColor="#ffffff" />
+
+        <org.eazegraph.lib.charts.PieChart xmlns:eaze="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/graph"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_below="@+id/btnMorph1"
+            android:layout_marginTop="10dp"
+            eaze:egHighlightStrength="1"
+            eaze:egInnerPadding="75"
+            eaze:egLegendHeight="0dp" />
+
+        <TextView
+            android:id="@+id/steps"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="135dp"
+            android:gravity="center"
+            android:text="10.000"
+            android:textSize="45sp" />
+
+        <TextView
+            android:id="@+id/unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/steps"
+            android:layout_centerHorizontal="true"
+            android:text="@string/steps"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:id="@+id/averageandtotal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/graph"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:id="@+id/average"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/total"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/averageandtotaltext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/averageandtotal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="@string/average" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="@string/total" />
+        </LinearLayout>
+
+        <org.eazegraph.lib.charts.BarChart xmlns:eaze="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/bargraph"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_below="@+id/averageandtotaltext"
+            android:layout_marginTop="50dp"
+            eaze:egLegendHeight="35dp"
+            eaze:egShowValues="true" />
+
+    </RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>

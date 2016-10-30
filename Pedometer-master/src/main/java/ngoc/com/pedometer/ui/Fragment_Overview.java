@@ -29,6 +29,13 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.support.annotation.ColorRes;
+import android.support.annotation.DimenRes;
+import android.support.annotation.IntegerRes;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -38,6 +45,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.dd.morphingbutton.MorphingButton;
 
 import org.eazegraph.lib.charts.BarChart;
 import org.eazegraph.lib.charts.PieChart;
@@ -68,6 +77,12 @@ public class Fragment_Overview extends Fragment implements SensorEventListener {
     public final static NumberFormat formatter = NumberFormat.getInstance(Locale.getDefault());
     private boolean showSteps = true;
 
+    private NavigationView navigationView;
+    private DrawerLayout drawer;
+    private Toolbar toolbar;
+    private View v;
+    private int mMorphCounter1 = 1;
+
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,12 +92,15 @@ public class Fragment_Overview extends Fragment implements SensorEventListener {
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              final Bundle savedInstanceState) {
-        final View v = inflater.inflate(R.layout.fragment_overview, null);
+        v = inflater.inflate(R.layout.fragment_overview, null);
         stepsView = (TextView) v.findViewById(R.id.steps);
         totalView = (TextView) v.findViewById(R.id.total);
         averageView = (TextView) v.findViewById(R.id.average);
+        drawer = (DrawerLayout) v.findViewById(R.id.drawer_layout);
+        navigationView = (NavigationView) v.findViewById(R.id.nvView);
 
         pg = (PieChart) v.findViewById(R.id.graph);
+        toolbar = (Toolbar) v.findViewById(R.id.toolbar);
 
         // slice for the steps taken today
         sliceCurrent = new PieModel("", 0, Color.parseColor("#99CC00"));
@@ -103,13 +121,132 @@ public class Fragment_Overview extends Fragment implements SensorEventListener {
         pg.setDrawValueInPie(false);
         pg.setUsePieRotation(true);
         pg.startAnimation();
+
+        setUpNavigationView();
         return v;
+    }
+
+    private void setUpNavigationView() {
+        //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+
+            // This method will trigger on item Click of navigation menu
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+
+                //Check to see which item was being clicked and perform appropriate action
+                switch (menuItem.getItemId()) {
+                    //Replacing the main content with ContentFragment Which is our Inbox View;
+                    case R.id.home:
+
+                        break;
+                    case R.id.nav_photos:
+                        break;
+                    case R.id.nav_movies:
+                        break;
+                    case R.id.nav_notifications:
+                        break;
+                    case R.id.nav_settings:
+                        break;
+                    // launch new intent instead of loading fragment
+
+                    default:
+                }
+
+                //Checking if the item is in checked state or not, if not make it in checked state
+                if (menuItem.isChecked()) {
+                    menuItem.setChecked(false);
+                } else {
+                    menuItem.setChecked(true);
+                }
+                menuItem.setChecked(true);
+
+                return true;
+            }
+        });
+
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(getActivity(), drawer, toolbar, R.string.openDrawer, R.string.closeDrawer) {
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                // Code here will be triggered once the drawer closes as we dont want anything to happen so we leave this blank
+                super.onDrawerClosed(drawerView);
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                // Code here will be triggered once the drawer open as we dont want anything to happen so we leave this blank
+                super.onDrawerOpened(drawerView);
+            }
+        };
+
+        //Setting the actionbarToggle to drawer layout
+        drawer.setDrawerListener(actionBarDrawerToggle);
+
+        //calling sync state is necessary or else your hamburger icon wont show up
+        actionBarDrawerToggle.syncState();
+
+        final MorphingButton btnMorph1 = (MorphingButton) v.findViewById(R.id.btnMorph1);
+        btnMorph1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onMorphButton1Clicked(btnMorph1);
+            }
+        });
+
+    }
+
+    private void onMorphButton1Clicked(final MorphingButton btnMorph) {
+        if (mMorphCounter1 == 0) {
+            mMorphCounter1++;
+            morphToSquare(btnMorph, integer(R.integer.mb_animation));
+        } else if (mMorphCounter1 == 1) {
+            mMorphCounter1 = 0;
+            morphToSuccess(btnMorph);
+        }
+    }
+
+    private void morphToSquare(final MorphingButton btnMorph, int duration) {
+        MorphingButton.Params square = MorphingButton.Params.create()
+                .duration(duration)
+                .cornerRadius(dimen(R.dimen.mb_corner_radius_2))
+                .width(dimen(R.dimen.mb_width_200))
+                .height(dimen(R.dimen.mb_height_56))
+                .color(color(R.color.mb_green))
+                .colorPressed(color(R.color.mb_green_dark))
+                .text(getString(R.string.run));
+        btnMorph.morph(square);
+    }
+
+    private void morphToSuccess(final MorphingButton btnMorph) {
+        MorphingButton.Params circle = MorphingButton.Params.create()
+                .duration(integer(R.integer.mb_animation))
+                .cornerRadius(dimen(R.dimen.mb_height_56))
+                .width(dimen(R.dimen.mb_width_120))
+                .height(dimen(R.dimen.mb_height_56))
+                .color(color(R.color.mb_red))
+                .colorPressed(color(R.color.mb_red_dark))
+                .icon(R.drawable.ic_action_cancel)
+                .text(getString(R.string.done));
+        btnMorph.morph(circle);
+    }
+
+    public int dimen(@DimenRes int resId) {
+        return (int) getResources().getDimension(resId);
+    }
+
+    public int color(@ColorRes int resId) {
+        return getResources().getColor(resId);
+    }
+
+    public int integer(@IntegerRes int resId) {
+        return getResources().getInteger(resId);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        getActivity().getActionBar().setDisplayHomeAsUpEnabled(false);
+//        getActivity().getActionBar().setDisplayHomeAsUpEnabled(false);
 
         Database db = Database.getInstance(getActivity());
 

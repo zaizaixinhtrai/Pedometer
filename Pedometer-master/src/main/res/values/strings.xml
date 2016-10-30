@@ -64,4 +64,9 @@
     <string name="no_sensor">Sensor not found</string>
     <string name="no_sensor_explain">This app requires a dedicated hardware step sensor - which your device does not have. This app won\'t run on your device.</string>
     <string name="permission_external_storage">No permission to access external storage</string>
+    <string name="nav_home">Home</string>
+    <string name="openDrawer">open_drawer</string>
+    <string name="closeDrawer">close_drawer</string>
+    <string name="run">Run</string>
+    <string name="done">Pause</string>
 </resources>
