@@ -15,12 +15,14 @@
  */
 package ngoc.com.pedometer.ui;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -33,9 +35,13 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.DimenRes;
 import android.support.annotation.IntegerRes;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.method.LinkMovementMethod;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -123,7 +129,14 @@ public class Fragment_Overview extends Fragment implements SensorEventListener {
         pg.startAnimation();
 
         setUpNavigationView();
+        setMorphingButton();
+        setToolbarTitle();
+
         return v;
+    }
+
+    private void setToolbarTitle() {
+        toolbar.setTitle(getString(R.string.app_name));
     }
 
     private void setUpNavigationView() {
@@ -137,18 +150,28 @@ public class Fragment_Overview extends Fragment implements SensorEventListener {
                 //Check to see which item was being clicked and perform appropriate action
                 switch (menuItem.getItemId()) {
                     //Replacing the main content with ContentFragment Which is our Inbox View;
-                    case R.id.home:
+                    case R.id.action_settings:
+                        drawer.closeDrawers();
+//                        getFragmentManager().beginTransaction()
+//                                .replace(android.R.id.content, new Fragment_Settings()).addToBackStack(null)
+//                                .commit();
+
+                        ActivityOptionsCompat options = ActivityOptionsCompat.makeCustomAnimation(getActivity(), R.anim.push_in_to_right, R.anim.push_in_to_left);
+                        Intent intent = new Intent(getActivity(), SettingActivity.class);
+
+                        ((Activity) getActivity()).startActivity(intent, options.toBundle());
 
                         break;
-                    case R.id.nav_photos:
+                    case R.id.action_split_count:
+                        drawer.closeDrawers();
+                        Dialog_Split.getDialog(getActivity(),
+                                total_start + Math.max(todayOffset + since_boot, 0)).show();
                         break;
-                    case R.id.nav_movies:
+                    case R.id.action_about:
+                        drawer.closeDrawers();
+                        showAboutDialog();
+
                         break;
-                    case R.id.nav_notifications:
-                        break;
-                    case R.id.nav_settings:
-                        break;
-                    // launch new intent instead of loading fragment
 
                     default:
                 }
@@ -181,19 +204,51 @@ public class Fragment_Overview extends Fragment implements SensorEventListener {
         };
 
         //Setting the actionbarToggle to drawer layout
-        drawer.setDrawerListener(actionBarDrawerToggle);
+        drawer.addDrawerListener(actionBarDrawerToggle);
 
         //calling sync state is necessary or else your hamburger icon wont show up
         actionBarDrawerToggle.syncState();
 
+
+    }
+
+    private void showAboutDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(R.string.about);
+        TextView tv = new TextView(getActivity());
+        tv.setPadding(10, 10, 10, 10);
+        tv.setText(R.string.about_text_links);
+        try {
+            tv.append(getString(R.string.about_app_version,
+                    getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName));
+        } catch (PackageManager.NameNotFoundException e1) {
+            // should not happen as the app is definitely installed when
+            // seeing the dialog
+            e1.printStackTrace();
+        }
+        tv.setMovementMethod(LinkMovementMethod.getInstance());
+        builder.setView(tv);
+        builder.setPositiveButton(android.R.string.ok,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        builder.create().show();
+    }
+
+    private void setMorphingButton() {
         final MorphingButton btnMorph1 = (MorphingButton) v.findViewById(R.id.btnMorph1);
         btnMorph1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onMorphButton1Clicked(btnMorph1);
+                startCountOrPause();
             }
         });
 
+        morphToSquare(btnMorph1, integer(R.integer.mb_animation));
     }
 
     private void onMorphButton1Clicked(final MorphingButton btnMorph) {
@@ -206,10 +261,24 @@ public class Fragment_Overview extends Fragment implements SensorEventListener {
         }
     }
 
+    private void startCountOrPause() {
+        SensorManager sm =
+                (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
+        if (getActivity().getSharedPreferences("pedometer", Context.MODE_PRIVATE)
+                .contains("pauseCount")) { // currently paused -> now resumed
+            sm.registerListener(this, sm.getDefaultSensor(Sensor.TYPE_STEP_COUNTER),
+                    SensorManager.SENSOR_DELAY_UI, 0);
+        } else {
+            sm.unregisterListener(this);
+        }
+        getActivity().startService(new Intent(getActivity(), SensorListener.class)
+                .putExtra("action", SensorListener.ACTION_PAUSE));
+    }
+
     private void morphToSquare(final MorphingButton btnMorph, int duration) {
         MorphingButton.Params square = MorphingButton.Params.create()
                 .duration(duration)
-                .cornerRadius(dimen(R.dimen.mb_corner_radius_2))
+                .cornerRadius(dimen(R.dimen.mb_height_56))
                 .width(dimen(R.dimen.mb_width_200))
                 .height(dimen(R.dimen.mb_height_56))
                 .color(color(R.color.mb_green))
@@ -236,7 +305,7 @@ public class Fragment_Overview extends Fragment implements SensorEventListener {
     }
 
     public int color(@ColorRes int resId) {
-        return getResources().getColor(resId);
+        return ContextCompat.getColor(getActivity(), resId);
     }
 
     public int integer(@IntegerRes int resId) {
@@ -335,19 +404,19 @@ public class Fragment_Overview extends Fragment implements SensorEventListener {
 
     @Override
     public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
-        inflater.inflate(R.menu.main, menu);
-        MenuItem pause = menu.getItem(0);
-        Drawable d;
-        if (getActivity().getSharedPreferences("pedometer", Context.MODE_PRIVATE)
-                .contains("pauseCount")) { // currently paused
-            pause.setTitle(R.string.resume);
-            d = getResources().getDrawable(R.drawable.ic_resume);
-        } else {
-            pause.setTitle(R.string.pause);
-            d = getResources().getDrawable(R.drawable.ic_pause);
-        }
-        d.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
-        pause.setIcon(d);
+//        inflater.inflate(R.menu.main, menu);
+//        MenuItem pause = menu.getItem(0);
+//        Drawable d;
+//        if (getActivity().getSharedPreferences("pedometer", Context.MODE_PRIVATE)
+//                .contains("pauseCount")) { // currently paused
+//            pause.setTitle(R.string.resume);
+//            d = getResources().getDrawable(R.drawable.ic_resume);
+//        } else {
+//            pause.setTitle(R.string.pause);
+//            d = getResources().getDrawable(R.drawable.ic_pause);
+//        }
+//        d.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+//        pause.setIcon(d);
     }
 
     @Override

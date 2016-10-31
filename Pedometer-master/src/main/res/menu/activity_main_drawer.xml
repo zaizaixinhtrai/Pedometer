@@ -2,28 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/ic_home_black_24dp"
-            android:title="@string/nav_home" />
-        <item
-            android:id="@+id/nav_photos"
-            android:icon="@drawable/ic_home_black_24dp"
-            android:title="@string/nav_home" />
-        <item
-            android:id="@+id/nav_movies"
-            android:icon="@drawable/ic_home_black_24dp"
-            android:title="@string/nav_home" />
 
         <item
-            android:id="@+id/nav_notifications"
-            android:icon="@drawable/ic_home_black_24dp"
-            android:title="@string/nav_home" />
+            android:id="@+id/action_settings"
+            android:icon="@drawable/ic_settings_black_24dp"
+            android:title="@string/settings" />
 
         <item
-            android:id="@+id/nav_settings"
-            android:icon="@drawable/ic_home_black_24dp"
-            android:title="@string/nav_home" />
+            android:id="@+id/action_split_count"
+            android:icon="@drawable/ic_track_changes_black_48dp"
+            android:title="@string/split_count" />
+
+        <item
+            android:id="@+id/action_about"
+            android:icon="@drawable/ic_supervisor_account_black_24dp"
+            android:title="@string/about" />
     </group>
 
 </menu>

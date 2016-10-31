@@ -103,7 +103,7 @@ public class Fragment_Settings extends PreferenceFragment implements OnPreferenc
 
         Preference account = findPreference("account");
         PlaySettingsWrapper
-                .setupAccountSetting(account, savedInstanceState, (ngoc.com.pedometer.ui.Activity_Main) getActivity());
+                .setupAccountSetting(account, savedInstanceState, getActivity());
 
         final SharedPreferences prefs =
                 getActivity().getSharedPreferences("pedometer", Context.MODE_PRIVATE);
@@ -124,13 +124,13 @@ public class Fragment_Settings extends PreferenceFragment implements OnPreferenc
     @Override
     public void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
-        PlaySettingsWrapper.onSavedInstance(outState, (Activity_Main) getActivity());
+        PlaySettingsWrapper.onSavedInstance(outState, getActivity());
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
+//        getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -141,15 +141,16 @@ public class Fragment_Settings extends PreferenceFragment implements OnPreferenc
     @Override
     public void onPrepareOptionsMenu(final Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        menu.findItem(R.id.action_settings).setVisible(false);
-        menu.findItem(R.id.action_pause).setVisible(false);
-        menu.findItem(R.id.action_split_count).setVisible(false);
+//        menu.findItem(R.id.action_settings).setVisible(false);
+//        menu.findItem(R.id.action_pause).setVisible(false);
+//        menu.findItem(R.id.action_split_count).setVisible(false);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(final MenuItem item) {
-        return ((Activity_Main) getActivity()).optionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(final MenuItem item) {
+////        return ((Activity_Main) getActivity()).optionsItemSelected(item);
+//        return false;
+//    }
 
     @Override
     public boolean onPreferenceClick(final Preference preference) {
