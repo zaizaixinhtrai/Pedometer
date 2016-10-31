@@ -50,6 +50,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dd.morphingbutton.MorphingButton;
@@ -89,6 +90,8 @@ public class Fragment_Overview extends Fragment implements SensorEventListener {
     private View v;
     private int mMorphCounter1 = 1;
 
+    private View navHeader;
+
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,6 +110,9 @@ public class Fragment_Overview extends Fragment implements SensorEventListener {
 
         pg = (PieChart) v.findViewById(R.id.graph);
         toolbar = (Toolbar) v.findViewById(R.id.toolbar);
+
+        // Navigation view header
+        navHeader = navigationView.getHeaderView(0);
 
         // slice for the steps taken today
         sliceCurrent = new PieModel("", 0, Color.parseColor("#99CC00"));
@@ -152,9 +158,6 @@ public class Fragment_Overview extends Fragment implements SensorEventListener {
                     //Replacing the main content with ContentFragment Which is our Inbox View;
                     case R.id.action_settings:
                         drawer.closeDrawers();
-//                        getFragmentManager().beginTransaction()
-//                                .replace(android.R.id.content, new Fragment_Settings()).addToBackStack(null)
-//                                .commit();
 
                         ActivityOptionsCompat options = ActivityOptionsCompat.makeCustomAnimation(getActivity(), R.anim.push_in_to_right, R.anim.push_in_to_left);
                         Intent intent = new Intent(getActivity(), SettingActivity.class);

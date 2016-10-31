@@ -15,7 +15,7 @@
 
         <item
             android:id="@+id/action_about"
-            android:icon="@drawable/ic_supervisor_account_black_24dp"
+            android:icon="@drawable/ic_contacts_black_36dp"
             android:title="@string/about" />
     </group>
 
