@@ -14,6 +14,11 @@
             android:title="@string/split_count" />
 
         <item
+            android:id="@+id/action_faq"
+            android:icon="@drawable/ic_question_answer_black_36dp"
+            android:title="@string/faq" />
+
+        <item
             android:id="@+id/action_about"
             android:icon="@drawable/ic_contacts_black_36dp"
             android:title="@string/about" />

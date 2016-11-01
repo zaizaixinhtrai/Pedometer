@@ -170,6 +170,12 @@ public class Fragment_Overview extends Fragment implements SensorEventListener {
                         Dialog_Split.getDialog(getActivity(),
                                 total_start + Math.max(todayOffset + since_boot, 0)).show();
                         break;
+                    case R.id.action_faq:
+                        drawer.closeDrawers();
+                        FAQDialog.getInstance().show(getActivity());
+
+                        break;
+
                     case R.id.action_about:
                         drawer.closeDrawers();
                         showAboutDialog();

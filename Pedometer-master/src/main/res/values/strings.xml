@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="MissingTranslation">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 
     <string name="app_name">Pedometer</string>
     <string name="goal">Goal</string>
@@ -48,7 +46,7 @@
     <string name="total_this_month">Total this month</string>
     <string name="average_this_month">Average this month</string>
     <string name="file_already_exists">File already exists. Are you sure you want to overwrite it?</string>
-    <string name="about_text_links">This app was created by Thomas Hoffmann (<a href="https://www.j4velin.de">www.j4velin.de</a>) and uses <a href="https://github.com/blackfizz/EazeGraph">EazeGraph</a> by Paul Cech and <a href="https://github.com/attenzione/android-ColorPickerPreference">ColorPickerPreference</a> by Sergey Margaritov.\n\nPedometer is open source! Get the code and the full list of contributors from <a href="https://github.com/j4velin/Pedometer">GitHub</a>.\n\n</string>
+    <string name="about_text_links">This app was created by Doi The Ngoc and uses <a href="https://github.com/blackfizz/EazeGraph">EazeGraph</a> by Paul Cech and <a href="https://github.com/attenzione/android-ColorPickerPreference">ColorPickerPreference</a> by Sergey Margaritov.\n\nPedometer is open source! Get the code and the full list of contributors from <a href="https://github.com/j4velin/Pedometer">GitHub</a>.\n\n</string>
     <string name="about_app_version">App version: %s</string>
     <string name="since">Since %s</string>
     <string name="start">Start</string>
@@ -66,6 +64,14 @@
     <string name="permission_external_storage">No permission to access external storage</string>
     <string name="openDrawer">open_drawer</string>
     <string name="closeDrawer">close_drawer</string>
+
     <string name="run">Run</string>
     <string name="done">Pause</string>
+    <string name="faq_title">Frequently Asked Questions</string>
+    <string name="steps_are_not_saved_on_shutdown">Steps are not saved on shutdown </string>
+    <string name="you_probably_used_a_root">You probably used a root app for the shutdown. In this case, the app did not notify other apps about the shutdown. As pedometer saves your steps only when it is notified about an upcoming shutdown, it relies on the system sending the ACTION_DEVICE_SHUTDOWN broadcast. Always use your hardware power button to shutdown your device to avoid this issue.</string>
+    <string name="achievement_not_granted">Achievement not granted</string>
+    <string name="achievements_are_granted_the_day">Achievements are granted the day after meeting the requirement.</string>
+    <string name="pebble_support">Pebble support</string>
+    <string name="can_not_implement_pebble_support">I can not implement Pebble support at the time as Pebble is still unable to ship their product to Germany. But the app is open source, so feel free to do it yourself.</string>
 </resources>
