@@ -32,7 +32,7 @@
             android:layout_width="200dp"
             android:layout_height="56dp"
             android:layout_centerHorizontal="true"
-            android:text="@string/run"
+            android:text="@string/start"
             android:textAllCaps="false"
             android:textColor="#ffffff"
             android:textSize="18sp" />

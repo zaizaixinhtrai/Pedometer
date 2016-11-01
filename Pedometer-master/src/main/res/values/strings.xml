@@ -65,8 +65,6 @@
     <string name="openDrawer">open_drawer</string>
     <string name="closeDrawer">close_drawer</string>
 
-    <string name="run">Run</string>
-    <string name="done">Pause</string>
     <string name="faq_title">Frequently Asked Questions</string>
     <string name="steps_are_not_saved_on_shutdown">Steps are not saved on shutdown </string>
     <string name="you_probably_used_a_root">You probably used a root app for the shutdown. In this case, the app did not notify other apps about the shutdown. As pedometer saves your steps only when it is notified about an upcoming shutdown, it relies on the system sending the ACTION_DEVICE_SHUTDOWN broadcast. Always use your hardware power button to shutdown your device to avoid this issue.</string>

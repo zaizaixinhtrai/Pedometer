@@ -292,7 +292,7 @@ public class Fragment_Overview extends Fragment implements SensorEventListener {
                 .height(dimen(R.dimen.mb_height_56))
                 .color(color(R.color.mb_green))
                 .colorPressed(color(R.color.mb_green_dark))
-                .text(getString(R.string.run));
+                .text(getString(R.string.start));
         btnMorph.morph(square);
     }
 
@@ -305,7 +305,7 @@ public class Fragment_Overview extends Fragment implements SensorEventListener {
                 .color(color(R.color.mb_red))
                 .colorPressed(color(R.color.mb_red_dark))
                 .icon(R.drawable.ic_action_cancel)
-                .text(getString(R.string.done));
+                .text(getString(R.string.pause));
         btnMorph.morph(circle);
     }
 
