@@ -133,10 +133,10 @@ public class Fragment_Settings extends PreferenceFragment implements OnPreferenc
 //        getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    @Override
-    public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
-        inflater.inflate(R.menu.main, menu);
-    }
+//    @Override
+//    public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
+//        inflater.inflate(R.menu.main, menu);
+//    }
 
     @Override
     public void onPrepareOptionsMenu(final Menu menu) {
